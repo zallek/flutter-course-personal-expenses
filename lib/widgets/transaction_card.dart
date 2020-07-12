@@ -19,7 +19,7 @@ class TransactionCard extends StatelessWidget {
           Container(
             alignment: Alignment.center,
             child: Text(
-              '\$${transaction.amount}',
+              '\$${transaction.amount.toStringAsFixed(2)}',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,

@@ -21,28 +21,37 @@ class TransactionForm extends StatelessWidget {
                 labelText: 'Title',
               ),
               controller: titleController,
+              onSubmitted: (_) => _submitData(context),
             ),
             TextField(
               decoration: InputDecoration(
                 labelText: 'Amount',
               ),
               controller: amountController,
+              keyboardType: TextInputType.number,
+              onSubmitted: (_) => _submitData(context),
             ),
             FlatButton(
               child: Text('Add Transaction'),
               textColor: Colors.green,
-              onPressed: () {
-                onAdd(
-                  titleController.text,
-                  double.tryParse(amountController.text),
-                );
-                FocusScope.of(context).unfocus();
-              },
+              onPressed: () => _submitData(context),
             )
           ],
         ),
         padding: EdgeInsets.all(10),
       ),
     );
+  }
+
+  void _submitData(BuildContext context) {
+    final enteredTitle = titleController.text;
+    final enteredAmount = double.tryParse(amountController.text);
+
+    if (enteredTitle.isEmpty || enteredAmount <= 0 || enteredAmount == null) {
+      return;
+    }
+
+    onAdd(enteredTitle, enteredAmount);
+    FocusScope.of(context).unfocus();
   }
 }
