@@ -40,7 +40,7 @@ class _TransactionFormState extends State<TransactionForm> {
           Container(
             child: FlatButton(
               child: Text('Add Transaction'),
-              textColor: Colors.green,
+              textColor: Theme.of(context).primaryColor,
               onPressed: _submitData,
             ),
             margin: EdgeInsets.symmetric(vertical: 20),

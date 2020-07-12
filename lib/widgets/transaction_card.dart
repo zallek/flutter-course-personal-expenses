@@ -23,7 +23,7 @@ class TransactionCard extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
-                color: Colors.green,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             margin: EdgeInsets.symmetric(
