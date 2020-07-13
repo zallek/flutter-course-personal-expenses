@@ -96,7 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
             middle: Text('Personal Expenses'),
             trailing: CupertinoButton(
               padding: EdgeInsets.all(0),
-              child: Icon(CupertinoIcons.add),
+              child: Text('Add'),
               onPressed: _showTransactionForm,
             ),
           )
@@ -116,23 +116,25 @@ class _MyHomePageState extends State<MyHomePage> {
     final chartHeight = max(contentHeight * 0.22, 100.0);
     final listHeight = contentHeight - chartHeight;
 
-    final pageBody = SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Container(
-            height: chartHeight,
-            child: TransactionChart(
-              recentTransactions: _recentTransactions,
+    final pageBody = SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: chartHeight,
+              child: TransactionChart(
+                recentTransactions: _recentTransactions,
+              ),
             ),
-          ),
-          Container(
-            height: listHeight,
-            child: TransactionList(
-              transactions: _userTransactions,
-              onDelete: _deleteTransaction,
-            ),
-          )
-        ],
+            Container(
+              height: listHeight,
+              child: TransactionList(
+                transactions: _userTransactions,
+                onDelete: _deleteTransaction,
+              ),
+            )
+          ],
+        ),
       ),
     );
 
