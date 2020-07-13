@@ -14,55 +14,33 @@ class TransactionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: 12,
-          horizontal: 5,
+      child: ListTile(
+        leading: Container(
+          alignment: Alignment.center,
+          width: 70,
+          child: FittedBox(
+            child: Text(
+              '\$${transaction.amount.toStringAsFixed(2)}',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+          ),
         ),
-        child: Row(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.only(
-                left: 2,
-                right: 7,
-              ),
-              width: 110,
-              child: FittedBox(
-                child: Text(
-                  '\$${transaction.amount.toStringAsFixed(2)}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    margin: EdgeInsets.only(bottom: 5),
-                    child: Text(
-                      transaction.title,
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
-                  Text(
-                    DateFormat.yMMMEd().format(transaction.date),
-                    style: TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+        title: Text(
+          transaction.title,
+          style: TextStyle(
+            fontSize: 16,
+          ),
+          overflow: TextOverflow.ellipsis,
+        ),
+        subtitle: Text(
+          DateFormat.yMMMEd().format(transaction.date),
+          style: TextStyle(
+            color: Colors.grey,
+          ),
         ),
       ),
     );
