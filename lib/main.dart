@@ -17,6 +17,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         accentColor: Colors.orangeAccent,
         fontFamily: 'Quicksand',
+        textTheme: ThemeData.light().textTheme.copyWith(
+              button: TextStyle(
+                color: Colors.white,
+              ),
+            ),
       ),
     );
   }
@@ -38,25 +43,25 @@ class _MyHomePageState extends State<MyHomePage> {
         .toList();
   }
 
-  void _addTransaction(String title, double amount) {
+  void _addTransaction(String title, double amount, DateTime date) {
     final newTx = Transaction(
       id: DateTime.now().toString(),
       title: title,
       amount: amount,
-      date: DateTime.now(),
+      date: date,
     );
     setState(() {
       _userTransactions.add(newTx);
     });
   }
 
-  void _showTransactionForm(BuildContext context) {
+  void _showTransactionForm() {
     showModalBottomSheet(
       context: context,
       builder: (_) {
         return TransactionForm(
-          onAdd: (String title, double amount) {
-            _addTransaction(title, amount);
+          onAdd: (String title, double amount, DateTime date) {
+            _addTransaction(title, amount, date);
             Navigator.of(context).pop();
           },
         );
@@ -72,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () => _showTransactionForm(context),
+            onPressed: _showTransactionForm,
           ),
         ],
       ),
@@ -89,7 +94,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _showTransactionForm(context),
+        onPressed: _showTransactionForm,
         child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

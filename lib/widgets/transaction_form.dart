@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TransactionForm extends StatefulWidget {
-  final void Function(String title, double amount) onAdd;
+  final void Function(String title, double amount, DateTime date) onAdd;
 
   TransactionForm({
     Key key,
@@ -13,9 +14,9 @@ class TransactionForm extends StatefulWidget {
 }
 
 class _TransactionFormState extends State<TransactionForm> {
-  final titleController = TextEditingController();
-
-  final amountController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
+  DateTime _selectedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -27,22 +28,43 @@ class _TransactionFormState extends State<TransactionForm> {
             decoration: InputDecoration(
               labelText: 'Title',
             ),
-            controller: titleController,
+            controller: _titleController,
             onSubmitted: (_) => _submitData(),
           ),
           TextField(
             decoration: InputDecoration(
               labelText: 'Amount',
             ),
-            controller: amountController,
+            controller: _amountController,
             keyboardType: TextInputType.number,
             onSubmitted: (_) => _submitData(),
           ),
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: _selectedDate == null
+                    ? Text('No Date Chosen')
+                    : Text(
+                        'Picked Date: ${DateFormat.yMMMEd().format(_selectedDate)}'),
+              ),
+              FlatButton(
+                textColor: Theme.of(context).primaryColor,
+                onPressed: _showDatePicker,
+                child: Text(
+                  'Choose Date',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
           Container(
             margin: EdgeInsets.symmetric(vertical: 20),
-            child: FlatButton(
+            child: RaisedButton(
               child: Text('Add Transaction'),
-              textColor: Theme.of(context).primaryColor,
+              color: Theme.of(context).primaryColor,
+              textColor: Theme.of(context).textTheme.button.color,
               onPressed: _submitData,
             ),
           ),
@@ -52,13 +74,26 @@ class _TransactionFormState extends State<TransactionForm> {
   }
 
   void _submitData() {
-    final enteredTitle = titleController.text;
-    final enteredAmount = double.tryParse(amountController.text);
+    final enteredTitle = _titleController.text;
+    final enteredAmount = double.tryParse(_amountController.text);
 
     if (enteredTitle.isEmpty || enteredAmount <= 0 || enteredAmount == null) {
       return;
     }
 
-    widget.onAdd(enteredTitle, enteredAmount);
+    widget.onAdd(enteredTitle, enteredAmount, _selectedDate ?? DateTime.now());
+  }
+
+  void _showDatePicker() async {
+    final pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now(),
+    );
+    if (pickedDate == null) return;
+    setState(() {
+      _selectedDate = pickedDate;
+    });
   }
 }
