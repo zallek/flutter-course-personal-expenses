@@ -18,23 +18,30 @@ class TransactionCard extends StatelessWidget {
         children: <Widget>[
           Container(
             alignment: Alignment.center,
-            child: Text(
-              '\$${transaction.amount.toStringAsFixed(2)}',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18,
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
             margin: EdgeInsets.symmetric(
               vertical: 20,
             ),
+            padding: EdgeInsets.symmetric(
+              horizontal: 7,
+            ),
             width: 110,
+            child: FittedBox(
+              child: Text(
+                '\$${transaction.amount.toStringAsFixed(2)}',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+            ),
           ),
           Expanded(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
+                  margin: EdgeInsets.only(bottom: 5),
                   child: Text(
                     transaction.title,
                     style: TextStyle(
@@ -42,7 +49,6 @@ class TransactionCard extends StatelessWidget {
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),
-                  margin: EdgeInsets.only(bottom: 5),
                 ),
                 Text(
                   DateFormat.yMMMEd().format(transaction.date),
@@ -51,7 +57,6 @@ class TransactionCard extends StatelessWidget {
                   ),
                 ),
               ],
-              crossAxisAlignment: CrossAxisAlignment.start,
             ),
           ),
         ],

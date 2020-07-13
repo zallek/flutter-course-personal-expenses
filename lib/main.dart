@@ -28,7 +28,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> userTransactions = [];
+  final List<Transaction> _userTransactions = [];
+
+  List<Transaction> get _recentTransactions {
+    return _userTransactions
+        .where(
+          (tx) => tx.date.isAfter(DateTime.now().subtract(Duration(days: 7))),
+        )
+        .toList();
+  }
 
   void _addTransaction(String title, double amount) {
     final newTx = Transaction(
@@ -38,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
       date: DateTime.now(),
     );
     setState(() {
-      userTransactions.add(newTx);
+      _userTransactions.add(newTx);
     });
   }
 
@@ -71,19 +79,18 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Container(
-              child: TransactionChart(),
-              width: double.infinity,
+            TransactionChart(
+              recentTransactions: _recentTransactions,
             ),
             TransactionList(
-              transactions: userTransactions,
+              transactions: _userTransactions,
             )
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
         onPressed: () => _showTransactionForm(context),
+        child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

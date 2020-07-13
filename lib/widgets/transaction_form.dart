@@ -20,6 +20,7 @@ class _TransactionFormState extends State<TransactionForm> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(10),
       child: Column(
         children: <Widget>[
           TextField(
@@ -38,16 +39,15 @@ class _TransactionFormState extends State<TransactionForm> {
             onSubmitted: (_) => _submitData(),
           ),
           Container(
+            margin: EdgeInsets.symmetric(vertical: 20),
             child: FlatButton(
               child: Text('Add Transaction'),
               textColor: Theme.of(context).primaryColor,
               onPressed: _submitData,
             ),
-            margin: EdgeInsets.symmetric(vertical: 20),
           ),
         ],
       ),
-      padding: EdgeInsets.all(10),
     );
   }
 

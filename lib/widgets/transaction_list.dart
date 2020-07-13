@@ -19,18 +19,18 @@ class TransactionList extends StatelessWidget {
           ? Column(
               children: <Widget>[
                 Container(
+                  margin: EdgeInsets.symmetric(vertical: 40),
                   child: Text(
                     'No transactions added yet!',
                     style: Theme.of(context).textTheme.headline6,
                   ),
-                  margin: EdgeInsets.symmetric(vertical: 40),
                 ),
                 Container(
+                  height: 160,
                   child: Image.asset(
                     'assets/images/waiting.png',
                     fit: BoxFit.cover,
                   ),
-                  height: 160,
                 ),
               ],
             )
