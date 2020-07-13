@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:math';
@@ -86,52 +89,72 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final appBar = AppBar(
-      title: Text('Personal Expenses'),
-      actions: <Widget>[
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: _showTransactionForm,
-        ),
-      ],
-    );
+    final mediaQuery = MediaQuery.of(context);
 
-    final contentHeight = MediaQuery.of(context).size.height -
+    final PreferredSizeWidget appBar = Platform.isIOS
+        ? CupertinoNavigationBar(
+            middle: Text('Personal Expenses'),
+            trailing: CupertinoButton(
+              padding: EdgeInsets.all(0),
+              child: Icon(CupertinoIcons.add),
+              onPressed: _showTransactionForm,
+            ),
+          )
+        : AppBar(
+            title: Text('Personal Expenses'),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.add),
+                onPressed: _showTransactionForm,
+              ),
+            ],
+          );
+
+    final contentHeight = mediaQuery.size.height -
         appBar.preferredSize.height -
-        MediaQuery.of(context).padding.top;
-
+        mediaQuery.padding.top;
     final chartHeight = max(contentHeight * 0.22, 100.0);
     final listHeight = contentHeight - chartHeight;
 
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: chartHeight,
-              child: TransactionChart(
-                recentTransactions: _recentTransactions,
-              ),
+    final pageBody = SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Container(
+            height: chartHeight,
+            child: TransactionChart(
+              recentTransactions: _recentTransactions,
             ),
-            Container(
-              height: listHeight,
-              child: TransactionList(
-                transactions: _userTransactions,
-                onDelete: _deleteTransaction,
-              ),
-            )
-          ],
-        ),
+          ),
+          Container(
+            height: listHeight,
+            child: TransactionList(
+              transactions: _userTransactions,
+              onDelete: _deleteTransaction,
+            ),
+          )
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _showTransactionForm,
-        child: Icon(
-          Icons.add,
-          color: Theme.of(context).textTheme.button.color,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+
+    return Platform.isIOS
+        ? CupertinoPageScaffold(
+            navigationBar: appBar,
+            child: pageBody,
+          )
+        : Scaffold(
+            appBar: appBar,
+            body: pageBody,
+            floatingActionButton: Platform.isAndroid
+                ? FloatingActionButton(
+                    onPressed: _showTransactionForm,
+                    child: Icon(
+                      Icons.add,
+                      color: Theme.of(context).textTheme.button.color,
+                    ),
+                  )
+                : null,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+          );
   }
 }
