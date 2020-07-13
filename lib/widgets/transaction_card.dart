@@ -5,10 +5,12 @@ import '../models/transaction.dart';
 
 class TransactionCard extends StatelessWidget {
   final Transaction transaction;
+  final Function(String id) onDelete;
 
   const TransactionCard({
     Key key,
     @required this.transaction,
+    @required this.onDelete,
   }) : super(key: key);
 
   @override
@@ -41,6 +43,13 @@ class TransactionCard extends StatelessWidget {
           style: TextStyle(
             color: Colors.grey,
           ),
+        ),
+        trailing: IconButton(
+          icon: Icon(
+            Icons.delete,
+            color: Theme.of(context).accentColor,
+          ),
+          onPressed: () => onDelete(transaction.id),
         ),
       ),
     );
