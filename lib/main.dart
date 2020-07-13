@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'dart:math';
 
 import 'models/transaction.dart';
 import 'widgets/transaction_chart.dart';
 import 'widgets/transaction_form.dart';
 import 'widgets/transaction_list.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  /* WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]); */
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -77,25 +86,40 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text('Personal Expenses'),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: _showTransactionForm,
+        ),
+      ],
+    );
+
+    final contentHeight = MediaQuery.of(context).size.height -
+        appBar.preferredSize.height -
+        MediaQuery.of(context).padding.top;
+
+    final chartHeight = max(contentHeight * 0.22, 100.0);
+    final listHeight = contentHeight - chartHeight;
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Personal Expenses'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: _showTransactionForm,
-          ),
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            TransactionChart(
-              recentTransactions: _recentTransactions,
+            Container(
+              height: chartHeight,
+              child: TransactionChart(
+                recentTransactions: _recentTransactions,
+              ),
             ),
-            TransactionList(
-              transactions: _userTransactions,
-              onDelete: _deleteTransaction,
+            Container(
+              height: listHeight,
+              child: TransactionList(
+                transactions: _userTransactions,
+                onDelete: _deleteTransaction,
+              ),
             )
           ],
         ),

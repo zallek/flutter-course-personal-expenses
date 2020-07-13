@@ -79,32 +79,33 @@ class _TransactionChartBar extends StatelessWidget {
             child: Text('\$${spendingAmount.toStringAsFixed(0)}'),
           ),
         ),
-        Container(
-          height: 60,
-          width: 10,
-          margin: EdgeInsets.symmetric(
-            vertical: 5,
-          ),
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: <Widget>[
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1),
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.grey[100],
-                ),
-              ),
-              FractionallySizedBox(
-                heightFactor: spendingPctOfTotal,
-                child: Container(
+        Flexible(
+          child: Container(
+            width: 10,
+            margin: EdgeInsets.symmetric(
+              vertical: 5,
+            ),
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: <Widget>[
+                Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).accentColor,
+                    border: Border.all(color: Colors.grey, width: 1),
                     borderRadius: BorderRadius.circular(10),
+                    color: Colors.grey[100],
                   ),
                 ),
-              ),
-            ],
+                FractionallySizedBox(
+                  heightFactor: spendingPctOfTotal,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).accentColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
         Text(label),
