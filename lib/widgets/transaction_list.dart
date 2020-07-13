@@ -20,7 +20,7 @@ class TransactionList extends StatelessWidget {
           ? Column(
               children: <Widget>[
                 Container(
-                  margin: EdgeInsets.only(top: 40),
+                  margin: const EdgeInsets.only(top: 40),
                   child: Text(
                     'No transactions added yet!',
                     style: Theme.of(context).textTheme.headline6,
@@ -29,7 +29,7 @@ class TransactionList extends StatelessWidget {
                 Flexible(
                   child: Container(
                     height: 160,
-                    margin: EdgeInsets.symmetric(vertical: 20),
+                    margin: const EdgeInsets.symmetric(vertical: 20),
                     child: Image.asset(
                       'assets/images/waiting.png',
                       fit: BoxFit.cover,

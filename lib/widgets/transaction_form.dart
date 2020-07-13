@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 class TransactionForm extends StatefulWidget {
   final void Function(String title, double amount, DateTime date) onAdd;
 
-  TransactionForm({
+  const TransactionForm({
     Key key,
     @required this.onAdd,
   }) : super(key: key);
@@ -66,7 +66,7 @@ class _TransactionFormState extends State<TransactionForm> {
               ],
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 20),
+              margin: const EdgeInsets.symmetric(vertical: 20),
               child: RaisedButton(
                 child: Text('Add Transaction'),
                 color: Theme.of(context).primaryColor,

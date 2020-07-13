@@ -35,7 +35,7 @@ class TransactionChart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Container(
-        padding: EdgeInsets.all(5),
+        padding: const EdgeInsets.all(5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -82,7 +82,7 @@ class _TransactionChartBar extends StatelessWidget {
         Flexible(
           child: Container(
             width: 10,
-            margin: EdgeInsets.symmetric(
+            margin: const EdgeInsets.symmetric(
               vertical: 5,
             ),
             child: Stack(
