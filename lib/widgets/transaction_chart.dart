@@ -34,15 +34,13 @@ class TransactionChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 15),
       child: Container(
         padding: EdgeInsets.all(5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: groupedTransactions.reversed.map((gp) {
-            return Flexible(
-              fit: FlexFit.tight,
+            return Expanded(
               child: _TransactionChartBar(
                 label: gp['day'],
                 spendingAmount: gp['amount'],
@@ -80,7 +78,9 @@ class _TransactionChartBar extends StatelessWidget {
         Container(
           height: 60,
           width: 10,
-          margin: EdgeInsets.symmetric(vertical: 5),
+          margin: EdgeInsets.symmetric(
+            vertical: 5,
+          ),
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: <Widget>[
