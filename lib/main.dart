@@ -8,11 +8,11 @@ import 'widgets/transaction_form.dart';
 import 'widgets/transaction_list.dart';
 
 void main() {
-  /* WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
-  ]); */
+  ]);
   runApp(MyApp());
 }
 
@@ -43,7 +43,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [];
-  bool _showChart = true;
 
   List<Transaction> get _recentTransactions {
     return _userTransactions
